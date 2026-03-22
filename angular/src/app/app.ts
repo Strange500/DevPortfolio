@@ -1,28 +1,20 @@
-import { NgClass } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-
-interface ServiceStatus {
-  name: string;
-  status: 'RUNNING' | 'STABLE' | 'DEGRADED' | 'OFFLINE';
-  pid: number;
-  cpu: string;
-}
-
-interface SidebarItem {
-  icon: string;
-  label: string;
-  active?: boolean;
-}
-
-interface FooterKey {
-  label: string;
-  active?: boolean;
-}
+import { FooterBarComponent } from './components/footer-bar/footer-bar.component';
+import { MetricsPanelComponent } from './components/metrics-panel/metrics-panel.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { StatusTableComponent } from './components/status-table/status-table.component';
+import { TerminalPanelComponent } from './components/terminal-panel/terminal-panel.component';
+import { FooterKey, Metric, ServiceStatus, SidebarItem } from './app.models';
 
 @Component({
   selector: 'app-root',
-  imports: [FormsModule, NgClass],
+  imports: [
+    SidebarComponent,
+    StatusTableComponent,
+    MetricsPanelComponent,
+    TerminalPanelComponent,
+    FooterBarComponent
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -58,7 +50,7 @@ export class App implements OnInit, OnDestroy {
     { label: 'F10 QUIT' }
   ];
 
-  readonly metrics = [
+  readonly metrics: Metric[] = [
     { label: 'STORAGE_DISK_A', value: 78 },
     { label: 'MEMORY_ALLOC', value: 42 }
   ];
@@ -106,10 +98,6 @@ export class App implements OnInit, OnDestroy {
 
     this.history = newHistory;
     this.command = '';
-  }
-
-  trackByServiceName(_: number, service: ServiceStatus): string {
-    return service.name;
   }
 
   private formatTime(): string {

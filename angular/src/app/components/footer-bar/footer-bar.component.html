@@ -1,0 +1,16 @@
+<footer class="h-6 border-t border-primary/40 bg-surface-container flex items-center px-2 text-[9px] font-bold uppercase z-10 shrink-0">
+  <div class="flex gap-4 h-full items-center">
+    @for (key of keys; track key.label) {
+      <div
+        class="px-2 h-full flex items-center cursor-pointer transition-colors"
+        [ngClass]="key.active ? 'bg-primary text-black' : 'hover:bg-white hover:text-black'"
+      >
+        {{ key.label }}
+      </div>
+    }
+  </div>
+  <div class="ml-auto flex gap-6 pr-2">
+    <span class="opacity-40">UTC: {{ time }}</span>
+    <span class="text-secondary phosphor-glow">SECURITY: LEVEL_4</span>
+  </div>
+</footer>

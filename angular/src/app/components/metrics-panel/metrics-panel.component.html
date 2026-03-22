@@ -1,0 +1,22 @@
+<div class="md:col-span-4 bg-surface-container-low p-4 border border-primary/10 space-y-6">
+  <div class="text-[10px] font-bold uppercase border-b border-primary/30 pb-1">HOST_METRICS</div>
+
+  @for (metric of metrics; track metric.label) {
+    <div class="space-y-1">
+      <div class="flex justify-between text-[9px] font-mono">
+        <span>{{ metric.label }}</span>
+        <span>{{ metric.value }}%</span>
+      </div>
+      <div class="h-1 bg-primary/10 w-full">
+        <div class="h-full bg-primary phosphor-glow metric-fill" [style.width.%]="metric.value"></div>
+      </div>
+    </div>
+  }
+
+  <div class="pt-4 space-y-1">
+    <div class="text-[9px] opacity-50 uppercase font-mono">OS: TUI_ARCH_v2.0</div>
+    <div class="text-[9px] opacity-50 uppercase font-mono">ARCH: x86_64_SILICON</div>
+    <div class="text-[9px] opacity-50 uppercase font-mono">SHELL: BRUTAL_SH</div>
+    <div class="text-[9px] opacity-50 uppercase font-mono">TERM: XTERM-256</div>
+  </div>
+</div>

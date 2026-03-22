@@ -1,0 +1,34 @@
+<div class="md:col-span-8 space-y-2">
+  <div class="flex justify-between items-end border-b border-primary/30 pb-1">
+    <span class="text-[10px] font-bold uppercase tracking-widest">[ SYSTEM_STATUS ]</span>
+    <span class="text-[9px] font-mono opacity-60">0x4F22_ACTIVE</span>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="w-full text-[10px] font-mono border-collapse">
+      <thead>
+        <tr class="bg-primary/5 text-left">
+          <th class="p-2 border border-primary/10">SERVICE</th>
+          <th class="p-2 border border-primary/10">STATUS</th>
+          <th class="p-2 border border-primary/10">PID</th>
+          <th class="p-2 border border-primary/10">CPU</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (s of services; track s.name) {
+          <tr class="hover:bg-primary/5 transition-colors">
+            <td class="p-2 border border-primary/10">{{ s.name }}</td>
+            <td
+              class="p-2 border border-primary/10"
+              [class.text-secondary]="s.status === 'DEGRADED'"
+              [class.text-primary]="s.status !== 'DEGRADED'"
+            >
+              {{ s.status }}
+            </td>
+            <td class="p-2 border border-primary/10">{{ s.pid }}</td>
+            <td class="p-2 border border-primary/10">{{ s.cpu }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
