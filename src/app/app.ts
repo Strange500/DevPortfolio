@@ -26,6 +26,8 @@ export class App implements OnInit, OnDestroy {
     ██║   ██║   ██║    ██╔══██║██╔══██╗██║     ██╔══██║██║   ██║   ██╔══╝  ██║        ██║
     ██║   ╚██████╔╝    ██║  ██║██║  ██║╚██████╗██║  ██║██║   ██║   ███████╗╚██████╗   ██║
     ╚═╝    ╚═════╝     ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝ ╚═════╝   ╚═╝
+
+                            -- Portfolio of Benjamin Roget --
 `;
 
   readonly services: ServiceStatus[] = [
@@ -58,6 +60,16 @@ export class App implements OnInit, OnDestroy {
   readonly command = signal('');
   readonly history = signal<string[]>(['Initializing architectural framework...']);
   readonly time = signal(this.formatTime());
+  readonly lastLogin = new Date().toLocaleString('en-GB', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+    timeZone: 'UTC'
+  }).replace(',', '') + ' UTC';
 
   private timerId: ReturnType<typeof setInterval> | null = null;
 
@@ -92,6 +104,9 @@ export class App implements OnInit, OnDestroy {
       newHistory.push('Available commands: help, clear, status, about, contact');
     } else if (currentCommand.toLowerCase() === 'status') {
       newHistory.push('System: OPTIMAL | Uplink: ACTIVE | Security: LEVEL_4');
+    } else if (currentCommand.toLowerCase().startsWith('echo ')) {
+      const echoText = currentCommand.substring(5);
+      newHistory.push(echoText);
     } else {
       newHistory.push(`Command not found: ${currentCommand}`);
     }
