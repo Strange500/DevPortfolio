@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { ServiceStatus } from '../../app.models';
 
 @Component({
@@ -9,5 +9,5 @@ import { ServiceStatus } from '../../app.models';
   styleUrl: './status-table.component.css'
 })
 export class StatusTableComponent {
-  @Input({ required: true }) services: ServiceStatus[] = [];
+  readonly services = input.required<ServiceStatus[]>();
 }

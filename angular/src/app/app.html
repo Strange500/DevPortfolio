@@ -33,14 +33,14 @@
         </div>
 
         <app-terminal-panel
-          [history]="history"
-          [command]="command"
-          (commandChange)="command = $event"
+          [history]="history()"
+          [command]="command()"
+          (commandChange)="command.set($event)"
           (commandSubmit)="handleCommand($event)"
         ></app-terminal-panel>
       </div>
     </main>
   </div>
 
-  <app-footer-bar [keys]="footerKeys" [time]="time"></app-footer-bar>
+  <app-footer-bar [keys]="footerKeys" [time]="time()"></app-footer-bar>
 </div>

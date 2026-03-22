@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { SidebarItem } from '../../app.models';
 
@@ -10,5 +10,5 @@ import { SidebarItem } from '../../app.models';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-  @Input({ required: true }) items: SidebarItem[] = [];
+  readonly items = input.required<SidebarItem[]>();
 }

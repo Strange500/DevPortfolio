@@ -3,7 +3,7 @@
     └────────────────────────────────────────────────────────────────────────────────────────────┘
   </div>
 
-  @for (line of history; track $index) {
+  @for (line of history(); track $index) {
     <div [ngClass]="line.startsWith('guest') ? 'text-primary font-bold' : 'text-white/80'">
       {{ line }}
     </div>
@@ -13,7 +13,7 @@
     <span class="text-primary font-bold">guest&#64;portfolio:~ $</span>
     <input
       type="text"
-      [ngModel]="command"
+      [ngModel]="command()"
       (ngModelChange)="commandChange.emit($event)"
       name="command"
       class="flex-1 bg-transparent border-none outline-none text-white caret-primary"

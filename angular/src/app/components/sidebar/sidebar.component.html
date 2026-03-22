@@ -4,7 +4,7 @@
     <div class="text-[8px] opacity-40 font-mono">vfs://usr/local/bin</div>
   </div>
 
-  @for (item of items; track item.label) {
+  @for (item of items(); track item.label) {
     <div
       class="flex items-center gap-2 h-7 px-2 cursor-pointer transition-all duration-75"
       [ngClass]="item.active ? 'bg-primary text-black font-bold' : 'text-primary hover:bg-primary/10'"

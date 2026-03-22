@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
 
@@ -10,11 +10,11 @@ import { NgClass } from '@angular/common';
   styleUrl: './terminal-panel.component.css'
 })
 export class TerminalPanelComponent {
-  @Input({ required: true }) history: string[] = [];
-  @Input({ required: true }) command = '';
+  readonly history = input.required<string[]>();
+  readonly command = input.required<string>();
 
-  @Output() commandChange = new EventEmitter<string>();
-  @Output() commandSubmit = new EventEmitter<Event>();
+  readonly commandChange = output<string>();
+  readonly commandSubmit = output<Event>();
 
   onSubmit(event: Event): void {
     this.commandSubmit.emit(event);

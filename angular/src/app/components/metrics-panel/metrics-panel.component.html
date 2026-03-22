@@ -1,7 +1,7 @@
 <div class="md:col-span-4 bg-surface-container-low p-4 border border-primary/10 space-y-6">
   <div class="text-[10px] font-bold uppercase border-b border-primary/30 pb-1">HOST_METRICS</div>
 
-  @for (metric of metrics; track metric.label) {
+  @for (metric of metrics(); track metric.label) {
     <div class="space-y-1">
       <div class="flex justify-between text-[9px] font-mono">
         <span>{{ metric.label }}</span>

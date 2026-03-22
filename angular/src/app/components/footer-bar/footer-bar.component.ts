@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FooterKey } from '../../app.models';
 
@@ -10,6 +10,6 @@ import { FooterKey } from '../../app.models';
   styleUrl: './footer-bar.component.css'
 })
 export class FooterBarComponent {
-  @Input({ required: true }) keys: FooterKey[] = [];
-  @Input({ required: true }) time = '';
+  readonly keys = input.required<FooterKey[]>();
+  readonly time = input.required<string>();
 }

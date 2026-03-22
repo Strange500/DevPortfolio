@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Metric } from '../../app.models';
 
 @Component({
@@ -9,5 +9,5 @@ import { Metric } from '../../app.models';
   styleUrl: './metrics-panel.component.css'
 })
 export class MetricsPanelComponent {
-  @Input({ required: true }) metrics: Metric[] = [];
+  readonly metrics = input.required<Metric[]>();
 }

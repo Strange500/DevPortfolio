@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { FooterBarComponent } from './components/footer-bar/footer-bar.component';
 import { MetricsPanelComponent } from './components/metrics-panel/metrics-panel.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -55,15 +55,15 @@ export class App implements OnInit, OnDestroy {
     { label: 'MEMORY_ALLOC', value: 42 }
   ];
 
-  command = '';
-  history: string[] = ['Initializing architectural framework...'];
-  time = this.formatTime();
+  readonly command = signal('');
+  readonly history = signal<string[]>(['Initializing architectural framework...']);
+  readonly time = signal(this.formatTime());
 
   private timerId: ReturnType<typeof setInterval> | null = null;
 
   ngOnInit(): void {
     this.timerId = setInterval(() => {
-      this.time = this.formatTime();
+      this.time.set(this.formatTime());
     }, 10000);
   }
 
@@ -75,18 +75,18 @@ export class App implements OnInit, OnDestroy {
 
   handleCommand(event: Event): void {
     event.preventDefault();
-    const currentCommand = this.command.trim();
+    const currentCommand = this.command().trim();
     if (!currentCommand) {
       return;
     }
 
     if (currentCommand.toLowerCase() === 'clear') {
-      this.history = [];
-      this.command = '';
+      this.history.set([]);
+      this.command.set('');
       return;
     }
 
-    const newHistory = [...this.history, `guest@portfolio:~ $ ${currentCommand}`];
+    const newHistory = [...this.history(), `guest@portfolio:~ $ ${currentCommand}`];
 
     if (currentCommand.toLowerCase() === 'help') {
       newHistory.push('Available commands: help, clear, status, about, contact');
@@ -96,8 +96,8 @@ export class App implements OnInit, OnDestroy {
       newHistory.push(`Command not found: ${currentCommand}`);
     }
 
-    this.history = newHistory;
-    this.command = '';
+    this.history.set(newHistory);
+    this.command.set('');
   }
 
   private formatTime(): string {
