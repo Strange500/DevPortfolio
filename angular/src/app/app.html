@@ -16,7 +16,7 @@
   </header>
 
   <div class="flex flex-1 overflow-hidden">
-    <app-sidebar [items]="sidebarItems"></app-sidebar>
+    <app-sidebar class="h-full" [items]="sidebarItems"></app-sidebar>
 
     <main class="flex-1 flex flex-col p-6 overflow-y-auto relative bg-surface">
       <div class="max-w-5xl w-full mx-auto space-y-12">
@@ -28,8 +28,8 @@
         </section>
 
         <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-          <app-status-table [services]="services"></app-status-table>
-          <app-metrics-panel [metrics]="metrics"></app-metrics-panel>
+          <app-status-table class="md:col-span-8" [services]="services"></app-status-table>
+          <app-metrics-panel class="md:col-span-4" [metrics]="metrics"></app-metrics-panel>
         </div>
 
         <app-terminal-panel
