@@ -1,0 +1,9 @@
+.metric-fill {
+	animation: fill-in 600ms ease-out;
+}
+
+@keyframes fill-in {
+	from {
+		width: 0;
+	}
+}

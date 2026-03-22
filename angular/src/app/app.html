@@ -1,0 +1,156 @@
+<div class="relative h-screen w-screen bg-black overflow-hidden flex flex-col font-sans selection:bg-primary selection:text-black">
+  <div class="crt-overlay"></div>
+  <div class="scanline"></div>
+
+  <header class="h-8 border-b border-primary/40 flex items-center justify-between px-4 bg-black z-10 shrink-0">
+    <div class="flex items-center gap-4 text-[10px] font-bold tracking-widest uppercase">
+      <span class="text-primary phosphor-glow">SYS_PORTFOLIO_V1.0.4</span>
+      <span class="opacity-40 hidden sm:inline">LAST_LOGIN: 2023.10.27 14:22:01 UTC</span>
+    </div>
+    <div class="flex items-center gap-3 opacity-60 text-xs">
+      <span>◉</span>
+      <span>⚡</span>
+      <span>◈</span>
+      <span>⚙</span>
+    </div>
+  </header>
+
+  <div class="flex flex-1 overflow-hidden">
+    <nav class="w-48 border-r border-primary/40 flex flex-col p-3 gap-1 bg-black z-10 shrink-0">
+      <div class="mb-6">
+        <div class="text-[10px] font-bold uppercase tracking-tighter opacity-80">DIRECTORY_TREE</div>
+        <div class="text-[8px] opacity-40 font-mono">vfs://usr/local/bin</div>
+      </div>
+
+      @for (item of sidebarItems; track item.label) {
+        <div
+          class="flex items-center gap-2 h-7 px-2 cursor-pointer transition-all duration-75"
+          [ngClass]="item.active ? 'bg-primary text-black font-bold' : 'text-primary hover:bg-primary/10'"
+        >
+          <span class="text-xs">{{ item.icon }}</span>
+          <span class="text-[10px] uppercase tracking-tight">{{ item.label }}</span>
+        </div>
+      }
+
+      <div class="mt-auto pt-4 border-t border-primary/10">
+        <div class="text-[9px] opacity-40 leading-relaxed uppercase font-mono">
+          CPU_LOAD: 12.4%<br />
+          MEM_USAGE: 442MB<br />
+          UPLINK: ACTIVE
+        </div>
+      </div>
+    </nav>
+
+    <main class="flex-1 flex flex-col p-6 overflow-y-auto relative bg-surface">
+      <div class="max-w-5xl w-full mx-auto space-y-12">
+        <section class="flex flex-col items-center py-8">
+          <div class="text-primary/20 font-mono text-[10px] w-full mb-4">
+            ┌────────────────────────────────────────────────────────────────────────────────────────────┐
+          </div>
+          <pre class="ascii-art text-[6px] md:text-[8px] lg:text-[10px] text-primary phosphor-glow">{{ asciiLogo }}</pre>
+        </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+          <div class="md:col-span-8 space-y-2">
+            <div class="flex justify-between items-end border-b border-primary/30 pb-1">
+              <span class="text-[10px] font-bold uppercase tracking-widest">[ SYSTEM_STATUS ]</span>
+              <span class="text-[9px] font-mono opacity-60">0x4F22_ACTIVE</span>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-[10px] font-mono border-collapse">
+                <thead>
+                  <tr class="bg-primary/5 text-left">
+                    <th class="p-2 border border-primary/10">SERVICE</th>
+                    <th class="p-2 border border-primary/10">STATUS</th>
+                    <th class="p-2 border border-primary/10">PID</th>
+                    <th class="p-2 border border-primary/10">CPU</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (s of services; track trackByServiceName($index, s)) {
+                    <tr class="hover:bg-primary/5 transition-colors">
+                      <td class="p-2 border border-primary/10">{{ s.name }}</td>
+                      <td
+                        class="p-2 border border-primary/10"
+                        [class.text-secondary]="s.status === 'DEGRADED'"
+                        [class.text-primary]="s.status !== 'DEGRADED'"
+                      >
+                        {{ s.status }}
+                      </td>
+                      <td class="p-2 border border-primary/10">{{ s.pid }}</td>
+                      <td class="p-2 border border-primary/10">{{ s.cpu }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="md:col-span-4 bg-surface-container-low p-4 border border-primary/10 space-y-6">
+            <div class="text-[10px] font-bold uppercase border-b border-primary/30 pb-1">HOST_METRICS</div>
+
+            @for (metric of metrics; track metric.label) {
+              <div class="space-y-1">
+                <div class="flex justify-between text-[9px] font-mono">
+                  <span>{{ metric.label }}</span>
+                  <span>{{ metric.value }}%</span>
+                </div>
+                <div class="h-1 bg-primary/10 w-full">
+                  <div class="h-full bg-primary phosphor-glow metric-fill" [style.width.%]="metric.value"></div>
+                </div>
+              </div>
+            }
+
+            <div class="pt-4 space-y-1">
+              <div class="text-[9px] opacity-50 uppercase font-mono">OS: TUI_ARCH_v2.0</div>
+              <div class="text-[9px] opacity-50 uppercase font-mono">ARCH: x86_64_SILICON</div>
+              <div class="text-[9px] opacity-50 uppercase font-mono">SHELL: BRUTAL_SH</div>
+              <div class="text-[9px] opacity-50 uppercase font-mono">TERM: XTERM-256</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 space-y-1 font-mono text-xs">
+          <div class="text-primary/20 text-[10px]">
+            └────────────────────────────────────────────────────────────────────────────────────────────┘
+          </div>
+
+          @for (line of history; track $index) {
+            <div [ngClass]="line.startsWith('guest') ? 'text-primary font-bold' : 'text-white/80'">
+              {{ line }}
+            </div>
+          }
+
+          <form (submit)="handleCommand($event)" class="flex items-center gap-2 pt-2">
+            <span class="text-primary font-bold">guest&#64;portfolio:~ $</span>
+            <input
+              type="text"
+              [(ngModel)]="command"
+              name="command"
+              class="flex-1 bg-transparent border-none outline-none text-white caret-primary"
+              autofocus
+            />
+            <div class="w-2 h-4 bg-primary blink"></div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer class="h-6 border-t border-primary/40 bg-surface-container flex items-center px-2 text-[9px] font-bold uppercase z-10 shrink-0">
+    <div class="flex gap-4 h-full items-center">
+      @for (key of footerKeys; track key.label) {
+        <div
+          class="px-2 h-full flex items-center cursor-pointer transition-colors"
+          [ngClass]="key.active ? 'bg-primary text-black' : 'hover:bg-white hover:text-black'"
+        >
+          {{ key.label }}
+        </div>
+      }
+    </div>
+    <div class="ml-auto flex gap-6 pr-2">
+      <span class="opacity-40">UTC: {{ time }}</span>
+      <span class="text-secondary phosphor-glow">SECURITY: LEVEL_4</span>
+    </div>
+  </footer>
+</div>
