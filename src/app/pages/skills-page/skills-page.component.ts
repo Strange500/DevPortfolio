@@ -21,6 +21,7 @@ interface SkillGroup {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SkillsPageComponent {
+
   readonly groups: readonly SkillGroup[] = [
     {
       title: 'Frontend Systems',
@@ -66,4 +67,5 @@ export class SkillsPageComponent {
     'Designing reusable standalone Angular components for fast iteration',
     'Shipping production-ready features with accessibility and performance in mind'
   ];
+
 }

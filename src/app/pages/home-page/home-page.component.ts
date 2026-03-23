@@ -1,8 +1,15 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { MetricsPanelComponent } from '../../components/metrics-panel/metrics-panel.component';
 import { StatusTableComponent } from '../../components/status-table/status-table.component';
 import { TerminalPanelComponent } from '../../components/terminal-panel/terminal-panel.component';
 import { Metric, ServiceStatus } from '../../app.models';
+
+interface CommandResult {
+  readonly output: string[];
+  readonly clearHistory?: boolean;
+  readonly navigateToSkills?: boolean;
+}
 
 @Component({
   selector: 'app-home-page',
@@ -12,6 +19,8 @@ import { Metric, ServiceStatus } from '../../app.models';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomePageComponent {
+  private readonly router = inject(Router);
+
   readonly asciiLogo = `
  ████████╗██╗   ██╗     █████╗ ██████╗  ██████╗██╗  ██╗██╗████████╗███████╗ ██████╗████████╗
  ╚══██╔══╝██║   ██║    ██╔══██╗██╔══██╗██╔════╝██║  ██║██║╚══██╔══╝██╔════╝██╔════╝╚══██╔══╝
@@ -38,33 +47,58 @@ export class HomePageComponent {
   readonly command = signal('');
   readonly history = signal<string[]>(['Initializing architectural framework...']);
 
+  private readonly commandHandlers: Record<string, (command: string) => CommandResult> = {
+    help: () => ({
+      output: ['Available commands: help, clear, status, skills, about, contact']
+    }),
+    clear: () => ({
+      output: [],
+      clearHistory: true
+    }),
+    status: () => ({
+      output: ['System: OPTIMAL | Uplink: ACTIVE | Security: LEVEL_4']
+    }),
+    skills: () => ({
+      output: ['Opening skills registry...'],
+      navigateToSkills: true
+    })
+  };
+
   handleCommand(event: Event): void {
     event.preventDefault();
-    const currentCommand = this.command().trim();
-    if (!currentCommand) {
+    const rawCommand = this.command().trim();
+    if (!rawCommand) {
       return;
     }
 
-    if (currentCommand.toLowerCase() === 'clear') {
+    const result = this.executeCommand(rawCommand);
+
+    if (result.clearHistory) {
       this.history.set([]);
-      this.command.set('');
-      return;
+    }
+    else {
+      const historyWithPrompt = [...this.history(), `guest@portfolio:~ $ ${rawCommand}`];
+      this.history.set([...historyWithPrompt, ...result.output]);
     }
 
-    const newHistory = [...this.history(), `guest@portfolio:~ $ ${currentCommand}`];
-
-    if (currentCommand.toLowerCase() === 'help') {
-      newHistory.push('Available commands: help, clear, status, about, contact');
-    } else if (currentCommand.toLowerCase() === 'status') {
-      newHistory.push('System: OPTIMAL | Uplink: ACTIVE | Security: LEVEL_4');
-    } else if (currentCommand.toLowerCase().startsWith('echo ')) {
-      const echoText = currentCommand.substring(5);
-      newHistory.push(echoText);
-    } else {
-      newHistory.push(`Command not found: ${currentCommand}`);
+    if (result.navigateToSkills) {
+      void this.router.navigate(['/skills']);
     }
 
-    this.history.set(newHistory);
     this.command.set('');
+  }
+
+  private executeCommand(command: string): CommandResult {
+    const normalizedCommand = command.toLowerCase();
+
+    if (normalizedCommand.startsWith('echo ')) {
+      return {
+        output: [command.substring(5)]
+      };
+    }
+
+    return this.commandHandlers[normalizedCommand]?.(command) ?? {
+      output: [`Command not found: ${command}`]
+    };
   }
 }
