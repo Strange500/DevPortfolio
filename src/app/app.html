@@ -19,26 +19,9 @@
   <div class="flex flex-1 overflow-hidden">
     <app-sidebar class="h-full" [items]="sidebarItems"></app-sidebar>
 
-    <main class="flex-1 flex flex-col p-6 overflow-y-auto relative bg-surface">
-      <div class="max-w-5xl w-full mx-auto space-y-12">
-        <section class="flex flex-col items-center py-8">
-          <div class="text-primary/20 font-mono text-[10px] w-full mb-4">
-            ┌────────────────────────────────────────────────────────────────────────────────────────────┐
-          </div>
-          <pre class="ascii-art text-[6px] md:text-[8px] lg:text-[10px] text-primary phosphor-glow">{{ asciiLogo }}</pre>
-        </section>
-
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-          <app-status-table class="md:col-span-8" [services]="services"></app-status-table>
-          <app-metrics-panel class="md:col-span-4" [metrics]="metrics"></app-metrics-panel>
-        </div>
-
-        <app-terminal-panel
-          [history]="history()"
-          [command]="command()"
-          (commandChange)="command.set($event)"
-          (commandSubmit)="handleCommand($event)"
-        ></app-terminal-panel>
+    <main class="flex-1 p-6 overflow-y-auto relative bg-surface">
+      <div class="max-w-5xl w-full mx-auto">
+        <router-outlet></router-outlet>
       </div>
     </main>
   </div>

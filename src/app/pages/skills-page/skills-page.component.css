@@ -1,0 +1,7 @@
+:host {
+  display: block;
+}
+
+.brand-logo-terminal {
+  filter: saturate(1.1) contrast(1.15) drop-shadow(0 0 4px rgba(156, 255, 147, 0.25));
+}

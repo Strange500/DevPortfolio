@@ -1,0 +1,52 @@
+<section class="space-y-8 py-4">
+  <header class="terminal-border bg-surface-container-low p-5">
+    <p class="text-[10px] font-mono uppercase tracking-[0.2em] opacity-70">PROFILE/SKILLS_INDEX</p>
+    <h1 class="text-2xl md:text-3xl font-bold tracking-tight phosphor-glow mt-2">Skills Matrix</h1>
+    <p class="text-sm text-primary/70 mt-3 max-w-3xl">
+      Snapshot of current technical capabilities and day-to-day execution areas.
+    </p>
+  </header>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    @for (group of groups; track group.title) {
+      <article class="terminal-border bg-surface-container p-4">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-sm uppercase tracking-[0.14em] font-semibold">{{ group.title }}</h2>
+          <span class="text-lg" aria-hidden="true">{{ group.icon }}</span>
+        </div>
+
+        <div class="space-y-4">
+          @for (skill of group.items; track skill.name) {
+            <div class="space-y-2 terminal-border bg-surface-container-high/40 p-3">
+              <div class="flex items-center gap-3 text-xs">
+                <div class="h-12 w-12 md:h-14 md:w-14 terminal-border bg-surface-container-highest flex items-center justify-center shrink-0">
+                  <img
+                    [ngSrc]="skill.logoUrl"
+                    [alt]="skill.name + ' logo'"
+                    width="40"
+                    height="40"
+                    class="h-8 w-8 md:h-10 md:w-10 brand-logo-terminal"
+                  />
+                </div>
+                <span class="font-semibold uppercase tracking-wide">{{ skill.name }}</span>
+              </div>
+              <p class="text-[11px] text-primary/60 leading-relaxed">{{ skill.context }}</p>
+            </div>
+          }
+        </div>
+      </article>
+    }
+  </div>
+
+  <section class="terminal-border bg-surface-container-low p-5">
+    <h2 class="text-sm uppercase tracking-[0.14em] font-semibold mb-3">Operational Highlights</h2>
+    <ul class="space-y-2 text-sm text-primary/75">
+      @for (highlight of highlights; track highlight) {
+        <li class="flex items-start gap-2">
+          <span aria-hidden="true">▸</span>
+          <span>{{ highlight }}</span>
+        </li>
+      }
+    </ul>
+  </section>
+</section>

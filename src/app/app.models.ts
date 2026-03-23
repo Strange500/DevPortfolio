@@ -8,7 +8,7 @@ export interface ServiceStatus {
 export interface SidebarItem {
   icon: string;
   label: string;
-  active?: boolean;
+  route?: string;
 }
 
 export interface FooterKey {

@@ -5,13 +5,22 @@
   </div>
 
   @for (item of items(); track item.label) {
-    <div
-      class="flex items-center gap-2 h-7 px-2 cursor-pointer transition-all duration-75"
-      [ngClass]="item.active ? 'bg-primary text-black font-bold' : 'text-primary hover:bg-primary/10'"
-    >
-      <span class="text-xs">{{ item.icon }}</span>
-      <span class="text-[10px] uppercase tracking-tight">{{ item.label }}</span>
-    </div>
+    @if (item.route) {
+      <a
+        class="flex items-center gap-2 h-7 px-2 transition-all duration-75 text-primary hover:bg-primary/10"
+        [routerLink]="item.route"
+        routerLinkActive="bg-primary text-black font-bold"
+        [routerLinkActiveOptions]="{ exact: item.route === '/' }"
+      >
+        <span class="text-xs">{{ item.icon }}</span>
+        <span class="text-[10px] uppercase tracking-tight">{{ item.label }}</span>
+      </a>
+    } @else {
+      <div class="flex items-center gap-2 h-7 px-2 text-primary/60 cursor-not-allowed">
+        <span class="text-xs">{{ item.icon }}</span>
+        <span class="text-[10px] uppercase tracking-tight">{{ item.label }}</span>
+      </div>
+    }
   }
 
   <div class="mt-auto pt-4 border-t border-primary/10">
