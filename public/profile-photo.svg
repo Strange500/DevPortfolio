@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-label="Profile placeholder">
+  <rect width="320" height="320" fill="#06110b" />
+  <rect x="10" y="10" width="300" height="300" fill="none" stroke="#8cff86" stroke-opacity="0.6" stroke-width="2" />
+  <circle cx="160" cy="122" r="52" fill="#8cff86" fill-opacity="0.25" />
+  <path d="M64 270c12-56 48-86 96-86s84 30 96 86" fill="#8cff86" fill-opacity="0.25" />
+  <text x="160" y="304" text-anchor="middle" fill="#8cff86" font-size="28" font-family="monospace" letter-spacing="4">BR</text>
+</svg>

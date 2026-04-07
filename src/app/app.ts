@@ -18,6 +18,7 @@ import { FooterKey, SidebarItem } from './app.models';
 export class App implements OnInit, OnDestroy {
   readonly sidebarItems: SidebarItem[] = [
     { icon: '📁', label: '~/root', route: '/' },
+    { icon: '👤', label: '~/about', route: '/about' },
     { icon: '⌘', label: '~/projects' },
     { icon: '▸', label: '~/skills', route: '/skills' },
     { icon: '✉', label: '~/contact' },

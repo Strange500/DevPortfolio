@@ -9,6 +9,7 @@ interface CommandResult {
   readonly output: string[];
   readonly clearHistory?: boolean;
   readonly navigateToSkills?: boolean;
+  readonly navigateToAbout?: boolean;
 }
 
 @Component({
@@ -61,6 +62,10 @@ export class HomePageComponent {
     skills: () => ({
       output: ['Opening skills registry...'],
       navigateToSkills: true
+    }),
+    about: () => ({
+      output: ['Opening personal profile...'],
+      navigateToAbout: true
     })
   };
 
@@ -83,6 +88,10 @@ export class HomePageComponent {
 
     if (result.navigateToSkills) {
       void this.router.navigate(['/skills']);
+    }
+
+    if (result.navigateToAbout) {
+      void this.router.navigate(['/about']);
     }
 
     this.command.set('');

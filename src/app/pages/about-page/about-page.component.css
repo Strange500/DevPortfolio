@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+.offer-open {
+  border-color: color-mix(in srgb, var(--color-primary) 60%, transparent);
+  background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+}
+
+.offer-closed {
+  border-color: color-mix(in srgb, var(--color-primary) 30%, transparent);
+  background: color-mix(in srgb, var(--color-primary) 4%, transparent);
+}
