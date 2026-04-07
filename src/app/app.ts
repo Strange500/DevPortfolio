@@ -1,14 +1,17 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FooterBarComponent } from './components/footer-bar/footer-bar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { TerminalPanelComponent } from './components/terminal-panel/terminal-panel.component';
 import { FooterKey, SidebarItem } from './app.models';
+import { TerminalService } from './services/terminal.service';
 
 @Component({
   selector: 'app-root',
   imports: [
     SidebarComponent,
     FooterBarComponent,
+    TerminalPanelComponent,
     RouterOutlet
   ],
   templateUrl: './app.html',
@@ -16,6 +19,8 @@ import { FooterKey, SidebarItem } from './app.models';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class App implements OnInit, OnDestroy {
+  readonly terminal = inject(TerminalService);
+
   readonly sidebarItems: SidebarItem[] = [
     { icon: '📁', label: '~/root', route: '/' },
     { icon: '👤', label: '~/about', route: '/about' },

@@ -1,22 +1,23 @@
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-terminal-panel',
-  standalone: true,
-  imports: [FormsModule, NgClass],
+  imports: [FormsModule],
   templateUrl: './terminal-panel.component.html',
-  styleUrl: './terminal-panel.component.css'
+  styleUrl: './terminal-panel.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TerminalPanelComponent {
   readonly history = input.required<string[]>();
   readonly command = input.required<string>();
+  readonly promptPath = input.required<string>();
 
   readonly commandChange = output<string>();
-  readonly commandSubmit = output<Event>();
+  readonly commandSubmit = output<void>();
 
   onSubmit(event: Event): void {
-    this.commandSubmit.emit(event);
+    event.preventDefault();
+    this.commandSubmit.emit();
   }
 }

@@ -22,6 +22,14 @@
     <main class="flex-1 p-6 overflow-y-auto relative bg-surface">
       <div class="max-w-5xl w-full mx-auto">
         <router-outlet></router-outlet>
+
+        <app-terminal-panel
+          [history]="terminal.history()"
+          [command]="terminal.command()"
+          [promptPath]="terminal.promptPath()"
+          (commandChange)="terminal.command.set($event)"
+          (commandSubmit)="terminal.submitCommand()"
+        ></app-terminal-panel>
       </div>
     </main>
   </div>

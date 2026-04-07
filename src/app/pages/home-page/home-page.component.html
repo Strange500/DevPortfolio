@@ -11,11 +11,4 @@
     <app-status-table class="md:col-span-8" [services]="services"></app-status-table>
     <app-metrics-panel class="md:col-span-4" [metrics]="metrics"></app-metrics-panel>
   </div>
-
-  <app-terminal-panel
-    [history]="history()"
-    [command]="command()"
-    (commandChange)="command.set($event)"
-    (commandSubmit)="handleCommand($event)"
-  ></app-terminal-panel>
 </div>

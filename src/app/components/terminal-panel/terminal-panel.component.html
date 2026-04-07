@@ -4,13 +4,13 @@
   </div>
 
   @for (line of history(); track $index) {
-    <div [ngClass]="line.startsWith('guest') ? 'text-primary font-bold' : 'text-white/80'">
+    <div [class]="line.startsWith('guest') ? 'text-primary font-bold' : 'text-white/80'">
       {{ line }}
     </div>
   }
 
   <form (submit)="onSubmit($event)" class="flex items-center gap-2 pt-2">
-    <span class="text-primary font-bold">guest&#64;portfolio:~ $</span>
+    <span class="text-primary font-bold">guest&#64;portfolio:{{ promptPath() }} $</span>
     <input
       type="text"
       [ngModel]="command()"
